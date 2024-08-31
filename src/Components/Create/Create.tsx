@@ -1,12 +1,12 @@
-import React, { Fragment, useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import './Create.css';
 import Header from '../Header/Header';
-import {useHistory} from 'react-router-dom'
 import {FirebaseContext,AuthContext} from '../../Store/FirebaseContext'
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
 
-  const history=useHistory()
+  const navigate=useNavigate()
 
   const [name,setName]=useState('')
   const [category,setCategory]=useState('')
@@ -19,9 +19,8 @@ const Create = () => {
   const date=new Date()
 
   return (
-    <Fragment>
+    <>
       <Header />
-      <card>
         <div className="centerDiv">
           <form>
             <label htmlFor="fname">Name</label>
@@ -72,13 +71,12 @@ const Create = () => {
                   userId:user.uid,
                   createdAt:date.toDateString()
                 })
-                history.push('/')
+                navigate('/')
               })})
             }}>upload and Submit</button>
           </form>
         </div>
-      </card>
-    </Fragment>
+    </>
   );
 };
 

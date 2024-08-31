@@ -6,15 +6,19 @@ import SellButton from "../../assets/SellButton"
 import SellButtonPlus from "../../assets/sellButtonPlus"
 import "./Header.css"
 import { useContext } from "react"
-import { AuthContext } from "../../Store/FirebaseContext"
+import { AuthContext, FirebaseContext } from "../../Store/FirebaseContext"
 
 export default function Header() {
 
     const navigate = useNavigate()
+    const { logout } = useContext(FirebaseContext)
+    async function SingOutUser() {
+        await logout()
+        await navigate("/")
+    }
+    const { user } = useContext(AuthContext)
+    console.log(user, 'user is showign1');
 
-    const {user} = useContext(AuthContext)
-    console.log(user,'user is showign1');
-    
     return (
         <div className="headerParentDiv">
             <div className="headerChildDiv">
@@ -46,21 +50,21 @@ export default function Header() {
                     </span>
                     <hr />
                 </div>
-                {user && <span className="logOptions" onClick={
-                    navigate('/')
-                }>Logout</span>}
+                {user && <span className="logOptions"
+                    onClick={ SingOutUser}>
+                    Logout</span>}
 
-                <div onClick={(e)=>{
+                <div onClick={(e) => {
                     e.preventDefault()
-                    {user? navigate('/create'):navigate('/login')}
+                    { user ? navigate('/create') : navigate('/login') }
                 }}
-                 className="sellMenu">
-                    <SellButton/>
+                    className="sellMenu">
+                    <SellButton />
                     <div className="sellMenuContent">
-                        <SellButtonPlus/>
+                        <SellButtonPlus />
                         <span>SELL</span>
                     </div>
-                 </div>
+                </div>
 
             </div>
         </div>

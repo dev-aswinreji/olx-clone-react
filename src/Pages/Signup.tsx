@@ -3,7 +3,7 @@ import Logo from "/olx-logo.png"
 import { UserSignup } from "../interfaces/signup"
 import "./Signup.css"
 import { FirebaseContext } from "../Store/FirebaseContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Signup() {
 
@@ -96,7 +96,7 @@ export default function Signup() {
                     <br />
                     <button onClick={handleSubmit}>Sign Up</button>
                 </form>
-
+                     <h1>Already Have Account   <Link to={"/login"}>Login</Link></h1>
             </div>
         </div>
     )
