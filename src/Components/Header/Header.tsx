@@ -5,13 +5,16 @@ import { BsArrowDown } from "react-icons/bs"
 import SellButton from "../../assets/SellButton"
 import SellButtonPlus from "../../assets/sellButtonPlus"
 import "./Header.css"
+import { useContext } from "react"
+import { AuthContext } from "../../Store/FirebaseContext"
 
 export default function Header() {
 
-
     const navigate = useNavigate()
 
-
+    const {user} = useContext(AuthContext)
+    console.log(user,'user is showign1');
+    
     return (
         <div className="headerParentDiv">
             <div className="headerChildDiv">
@@ -38,18 +41,18 @@ export default function Header() {
                 <div className="loginPage">
                     <span className="logOptions"
                         onClick={() => navigate('/login')} >{
-                            // user ? `Welcom ${user.Displayname}` : "Login"
+                            user ? `Welcom ${user.email}` : "Login"
                         }
                     </span>
                     <hr />
                 </div>
-                {/* {user && <span className="logOptions" onClick={
+                {user && <span className="logOptions" onClick={
                     navigate('/')
-                }>Logout</span>} */}
+                }>Logout</span>}
 
                 <div onClick={(e)=>{
                     e.preventDefault()
-                    // {user? navigate('/create'):navigate('/login')}
+                    {user? navigate('/create'):navigate('/login')}
                 }}
                  className="sellMenu">
                     <SellButton/>
