@@ -1,11 +1,21 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import Logo from "/olx-logo.png"
 import "./Login.css"
+import { FirebaseContext } from "../Store/FirebaseContext"
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate("/")
+    const {loginAuth} = useContext(FirebaseContext)
+    const handleLogin = async (e)=>{
+        e.preventDefault()
+        const loginVerification = await loginAuth(email,password)
+        if(loginVerification === "success"){
+           navigate("/") 
+        }
+    }
     return (
         <div>
             <div className="loginParentDiv">
@@ -31,7 +41,7 @@ export default function Login() {
                       />
                       <br />
                       <br />
-                      <button>Login</button>
+                      <button onClick={handleLogin}>Login</button>
                       <br />
                 </form>
                 <span>

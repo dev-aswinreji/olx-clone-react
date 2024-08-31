@@ -1,11 +1,13 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Logo from "/olx-logo.png"
 import { UserSignup } from "../interfaces/signup"
 import "./Signup.css"
-
+import { FirebaseContext } from "../Store/FirebaseContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Signup() {
 
+    const navigate = useNavigate()
     const signup: UserSignup = {
         username: "",
         password: "",
@@ -13,28 +15,37 @@ export default function Signup() {
         phoneNumber: "",
     }
     const [form, setForm] = useState(signup)
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(e.target.name);
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        })
-        console.log(form, 'form is showing');
 
+    const { signupAuth } = useContext(FirebaseContext)
+
+    const handleSubmit = async (e: Event) => {
+        e.preventDefault()
+        const accountVerfied= await signupAuth(form.username, form.email, form.password)
+        if(accountVerfied === 'success'){
+            navigate('/login')
+        }
     }
+    // const handleChange = (e) => {
+    //     setForm({
+    //         ...form,
+    //         [e.target.name]: e.target.value,
+    //     })
+    // }
     return (
         <div>
             <div className="signupParentDiv">
                 <img src={Logo} width="200px" height="200px" alt="" />
-                <form onClick={handleSubmit}>
+                <form>
                     <label htmlFor="fname">Username</label>
                     <br />
                     <input type="text"
                         className="input"
                         value={form.username}
                         // onChange={(e)=>{handleSubmit(e)}}
-                        onChange={handleSubmit}
+                        onChange={(e) => setForm({
+                            ...form,
+                            [e.target.name]: e.target.value
+                        })}
                         name="username"
                         id="fname"
                     />
@@ -45,9 +56,12 @@ export default function Signup() {
                     <input type="email"
                         className="input"
                         name="email"
-                        id=""
+                        id="email"
                         value={form.email}
-                        onChange={handleSubmit}
+                        onChange={(e) => setForm({
+                            ...form,
+                            [e.target.name]: e.target.value
+                        })}
                         required
                     />
                     <br />
@@ -57,23 +71,30 @@ export default function Signup() {
                     <input type="password"
                         className="input"
                         name="password"
-                        id=""
+                        id="password"
                         value={form.password}
-                        onChange={handleSubmit}
+                        onChange={(e) => setForm({
+                            ...form,
+                            [e.target.name]: e.target.value
+                        })}
                     />
                     <br />
                     <br />
                     <label htmlFor="phoneNumber">Phone Number</label>
                     <br />
                     <input type="tel"
+                        className="input"
                         name="phoneNumber"
-                        id=""
+                        id="phoneNumber"
                         value={form.phoneNumber}
-                        onChange={handleSubmit}
+                        onChange={(e) => setForm({
+                            ...form,
+                            [e.target.name]: e.target.value
+                        })}
                     />
                     <br />
                     <br />
-                    <button>Sign Up</button>
+                    <button onClick={handleSubmit}>Sign Up</button>
                 </form>
 
             </div>
