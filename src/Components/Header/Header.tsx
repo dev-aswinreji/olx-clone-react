@@ -14,9 +14,15 @@ export default function Header() {
     const { logout } = useContext(FirebaseContext)
     async function SingOutUser() {
         await logout()
-        await navigate("/")
+        navigate("/")
+    }
+    function HandleSell(){
+        navigate("/create")
     }
     const { user } = useContext(AuthContext)
+    if(!user){
+        navigate("/login")
+    }
     console.log(user, 'user is showign1');
 
     return (
@@ -62,7 +68,7 @@ export default function Header() {
                     <SellButton />
                     <div className="sellMenuContent">
                         <SellButtonPlus />
-                        <span>SELL</span>
+                        <span onClick={HandleSell}>SELL</span>
                     </div>
                 </div>
 

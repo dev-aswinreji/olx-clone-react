@@ -6,20 +6,21 @@ import { useContext, useEffect } from "react"
 import { AuthContext } from "./Store/FirebaseContext"
 import { auth } from "./Firebase/config"
 import { onAuthStateChanged } from "firebase/auth"
+import Create from "./Components/Create/Create"
 
-function App() {
+function App(): JSX.Element {
 
 
-  const {setUser} = useContext(AuthContext) 
+  const { setUser } = useContext(AuthContext)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       console.log(user, 'user is showing hellow');
     });
-  
+
     return () => unsubscribe();
-  }, [setUser]); 
-  
+  }, [setUser]);
+
 
 
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" Component={Login} />
           <Route path="/" Component={Home} />
           <Route path="/signup" Component={Signup} />
+          <Route path="/create" Component={Create} />
         </Routes>
       </Router>
     </div>

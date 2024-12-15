@@ -1,6 +1,5 @@
 import  { useContext, useState } from 'react';
 import './Create.css';
-import Header from '../Header/Header';
 import {FirebaseContext,AuthContext} from '../../Store/FirebaseContext'
 import { useNavigate } from 'react-router-dom';
 
@@ -11,16 +10,21 @@ const Create = () => {
   const [name,setName]=useState('')
   const [category,setCategory]=useState('')
   const [price,setPrice]=useState('')
-  const [image,setImage]=useState(null)
 
   const {firebase}=useContext(FirebaseContext)
   const {user}=useContext(AuthContext)
+  
+  if(!user){
+    navigate("/login")
+  }
 
+  console.log(user,'user is here in create pagte ===========>>>>>>>>>>');
+  
+  const [image,setImage]=useState(null)
   const date=new Date()
 
   return (
     <>
-      <Header />
         <div className="centerDiv">
           <form>
             <label htmlFor="fname">Name</label>
@@ -32,7 +36,6 @@ const Create = () => {
               onChange={(e)=>setName(e.target.value)}
               id="fname"
               name="Name"
-              defaultValue="John"
             />
             <br />
             <label htmlFor="fname">Category</label>
@@ -42,15 +45,14 @@ const Create = () => {
               type="text"
               value={category}
               onChange={(e)=>setCategory(e.target.value)}
-              id="fname"
+              id="cate"
               name="category"
-              defaultValue="John"
             />
             <br />
             <label htmlFor="fname">Price</label>
             <br />
             <input className="input" type="number" value={price}
-              onChange={(e)=>setPrice(e.target.value)} id="fname" name="Price" />
+              onChange={(e)=>setPrice(e.target.value)} id="price-id" name="Price" />
             <br />
           </form>
           <br />
@@ -62,7 +64,7 @@ const Create = () => {
             <button className="uploadBtn" onClick={(e)=>{
               e.preventDefault()
               firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
-                ref.getDownloadURL().then((url)=>{
+                ref.getDownloadURL().then((url:any)=>{
                 firebase.firestore().collection('products').add({
                   name,
                   category,

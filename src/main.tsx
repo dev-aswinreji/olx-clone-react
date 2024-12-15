@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import App  from './App.tsx'
 import Context, { FirebaseContext } from './Store/FirebaseContext.tsx'
 import { loginAuth, logout, signupAuth } from "./Firebase/config.ts"
 

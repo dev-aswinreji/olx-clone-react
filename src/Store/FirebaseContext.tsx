@@ -5,7 +5,7 @@ export const FirebaseContext = createContext<any|null>(null)
 export const AuthContext = createContext<any|null>(null)
 
 
-export default function Context ({children}){
+export default function Context ({children}:JSX.Element | any):JSX.Element{
     const [user,setUser] = useState()
 
     return (
