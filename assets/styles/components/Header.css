@@ -1,8 +1,8 @@
 .headerParentDiv {
-  padding: 10px;
+  padding: 10px 16px;
   background-color: whitesmoke;
   position: fixed;
-  width: 100vw;
+  width: 100%;
   z-index: 999;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .placeSearch {
-  width: 16em;
+  width: 17em;
   height: 48px;
   display: flex;
   align-items: center;
@@ -94,9 +94,10 @@
   margin-right: 5px;
 }
 
+.language svg {
+}
 
-
-.span {
+.loginPage span {
   text-decoration: none;
   font-size: 16px;
   white-space: normal;
@@ -109,10 +110,6 @@
   margin: 0;
   background-color: black;
   height: 2px;
-}
-
-.loginPage a{
-  text-decoration: none;
 }
 
 .sellMenu {
@@ -156,8 +153,7 @@
 
 @media only screen and (max-width: 700px) {
   .placeSearch,
-  .productSearch,
-  .sellMenu {
+  .productSearch {
     display: none;
   }
 }
