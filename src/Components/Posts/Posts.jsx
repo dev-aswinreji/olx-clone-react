@@ -17,6 +17,9 @@ function Posts() {
     const fetchData = async () => {
       const firestore = getFirestore(firebase);
       const querySnapshot = await getDocs(collection(firestore, "products"));
+      console.log('data is hererererer=================>>>>>>>>>>>>>>>>>>');
+      console.log(querySnapshot.docs.data,'data is showing');
+      
       const data = querySnapshot.docs.map((product) => {
         return {
           ...product.data(),
